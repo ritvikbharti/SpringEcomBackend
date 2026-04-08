@@ -39,13 +39,50 @@ public class ProductController {
     ){
         Product savedProduct = null;
         try{
-             savedProduct = productService.addProduct(product, imageFile);
+             savedProduct = productService.addOrUpdateProduct(product, imageFile);
             return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
 
         }catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("product/{productId}/image")
+    public ResponseEntity<byte[]> getImageByProductId(@PathVariable int productId){
+        Product product = productService.getProductById(productId);
+        return new ResponseEntity<>(product.getImageData(),HttpStatus.OK);
+    }
+
+    @PutMapping("/product/{id}")
+    public ResponseEntity<String> updateProduct(@PathVariable int id, @RequestPart("product") Product product, @RequestPart("imageFile") MultipartFile imageFile){
+        Product updatedProduct = null;
+        try{
+            updatedProduct = productService.addOrUpdateProduct(product,imageFile);
+            return new ResponseEntity<>("Updated",HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
+    @DeleteMapping("/product/{id}")
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") int id){
+        Product deletedProduct = null;
+        try{
+            productService.deleteProduct(id);
+            return new ResponseEntity<>("Deleted",HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("error",HttpStatus.OK);
+        }
+
+
+
+    }
+    @GetMapping("/products/search")
+    public ResponseEntity<List<Product>> searchProducts(@RequestParam String keyword){
+        List<Product> products = productService.searchProducts(keyword);
+        System.out.println("Searching with: " +keyword);
+        return new ResponseEntity<>(products,HttpStatus.OK);
+    }
 }
+
 
 

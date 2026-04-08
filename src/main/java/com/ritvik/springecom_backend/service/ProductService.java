@@ -21,7 +21,7 @@ public class ProductService  {
         return productRepo.findById(id).orElse(null);
     }
 
-    public Product addProduct(Product product, MultipartFile image) {
+    public Product addOrUpdateProduct(Product product, MultipartFile image) {
         product.setImageName(image.getOriginalFilename());
         product.setImageType(image.getContentType());
         try {
@@ -31,4 +31,15 @@ public class ProductService  {
         }
         return productRepo.save(product);
     }
+
+
+    public void deleteProduct(int id) {
+         productRepo.deleteById(id);
+    }
+
+    public List<Product> searchProducts(String keyword) {
+        return productRepo.searchProducts(keyword);
+    }
+
+
 }
