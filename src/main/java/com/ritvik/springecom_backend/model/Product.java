@@ -1,4 +1,4 @@
-package com.ritvik.springecom_backend;
+package com.ritvik.springecom_backend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;

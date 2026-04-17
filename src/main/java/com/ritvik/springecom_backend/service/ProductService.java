@@ -1,6 +1,6 @@
 package com.ritvik.springecom_backend.service;
 
-import com.ritvik.springecom_backend.Product;
+import com.ritvik.springecom_backend.model.Product;
 import com.ritvik.springecom_backend.repo.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
